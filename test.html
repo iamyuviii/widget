@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SSO Demo Widget</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .login-card {
+      background-color: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .login-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .login-title {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .login-button {
+      width: 200px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background-color: #4285f4;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    .login-button:hover {
+      background-color: #357ae8;
+    }
+
+    .login-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .login-error {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #ffebee;
+      color: #c62828;
+      border-radius: 4px;
+      font-size: 14px;
+      border: 1px solid #ef5350;
+      width: 100%;
+    }
+
+    .login-page {
+      max-width: 1000px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .login-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .back-button {
+      background: none;
+      border: none;
+      color: #4285f4;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .back-button:hover {
+      text-decoration: underline;
+    }
+
+    .widget-container-full {
+      min-width: 845px;
+      min-height: 400px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 20px;
+      background: #fafafa;
+    }
+
+    .confige-page {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .confige-form {
+      display: flex;
+      flex-direction: column;
+      gap: 21px;
+      padding: 10px 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .form-group > input,
+    select {
+      border: 1px solid skyblue;
+      padding: 6px;
+      border-radius: 8px;
+      outline: 1px solid rgb(153, 161, 255);
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- HOME PAGE -->
+  <div id="home-page" class="login-container">
+    <div class="login-card">
+      <div class="login-left">
+        <h1 class="login-title">Welcome to SSO Demo</h1>
+        <button id="confige-btn" class="login-button" style="background-color: #34A853;">configeure Settings</button>
+        <button id="login-btn" class="login-button">Go to Login</button>
+        <button id="profile-btn" class="login-button" style="background-color: #EA4335;">Go to Profile</button>
+        <div id="error" class="login-error hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- confige PAGE -->
+  <div id="confige-page" class="login-container hidden">
+    <div class="login-card confige-page">
+      <div class="login-header">
+        <button id="back-from-confige" class="back-button">← Back to Home</button>
+        <h1 class="login-title">Widget configeuration</h1>
+      </div>
+      <form id="confige-form" class="confige-form">
+        <div class="form-group">
+          <label>Channel Name</label>
+          <input type="text" id="channelName" value="toi" required />
+        </div>
+        <div class="form-group">
+          <label>Google Client ID</label>
+          <input type="text" id="googleClientId" value="103703403489-b4t4lt8mr05brqpcdrmsu0di54cmjv4f.apps.googleusercontent.com" required />
+        </div>
+        <div class="form-group">
+          <label>Redirect URL (ru)</label>
+          <input type="text" id="ru" placeholder="Enter redirect URL" />
+        </div>
+        <div class="form-group">
+          <label>Show Success Screen</label>
+          <select id="showSuccessScreen">
+            <option value="false">False (Default)</option>
+            <option value="true">True</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>GIS Plus Fedcm Enabled</label>
+          <select id="GISPlusFedcmEnabled">
+            <option value="true">True (Default)</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Sign In Callback Message (Optional)</label>
+          <input type="text" id="signInCallback" placeholder="Leave empty to disable callback" />
+          <small>If provided, this message will be shown on successful login</small>
+        </div>
+        <button type="submit" class="login-button" style="width:100%;margin-top:20px;">Save configuration</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGIN PAGE -->
+  <div id="login-page" class="login-container hidden">
+    <div class="login-card login-page">
+      <div class="login-header">
+        <button id="back-from-login" class="back-button">← Back to Home</button>
+        <h1 class="login-title">SSO Login</h1>
+      </div>
+      <div id="ssoLogin" class="widget-container-full"></div>
+      <div id="login-error" class="login-error hidden"></div>
+    </div>
+  </div>
+
+  <!-- PROFILE PAGE -->
+  <div id="profile-page" class="login-container hidden">
+    <div class="login-card login-page">
+      <div class="login-header">
+        <button id="back-from-profile" class="back-button">← Back to Home</button>
+        <h1 class="login-title">SSO Profile</h1>
+      </div>
+      <div id="ssoprofileWidgetMain" class="widget-container-full"></div>
+      <div id="profile-error" class="login-error hidden"></div>
+    </div>
+  </div>
+
+  <script>
+    const pages = {
+      home: document.getElementById('home-page'),
+      confige: document.getElementById('confige-page'),
+      login: document.getElementById('login-page'),
+      profile: document.getElementById('profile-page')
+    };
+
+    const showPage = (name) => {
+      Object.values(pages).forEach(p => p.classList.add('hidden'));
+      pages[name].classList.remove('hidden');
+    };
+
+    const confige = {
+      channelName: 'toi',
+      googleClientId: '103703403489-b4t4lt8mr05brqpcdrmsu0di54cmjv4f.apps.googleusercontent.com',
+      ru: '',
+      showSuccessScreen: false,
+      GISPlusFedcmEnabled: true,
+      signInCallback: ''
+    };
+
+    document.getElementById('confige-btn').onclick = () => showPage('confige');
+    document.getElementById('login-btn').onclick = handleLoginClick;
+    document.getElementById('profile-btn').onclick = handleProfileClick;
+    document.getElementById('back-from-confige').onclick = () => showPage('home');
+    document.getElementById('back-from-login').onclick = () => showPage('home');
+    document.getElementById('back-from-profile').onclick = () => showPage('home');
+
+    document.getElementById('confige-form').onsubmit = (e) => {
+      e.preventDefault();
+      confige.channelName = document.getElementById('channelName').value;
+      confige.googleClientId = document.getElementById('googleClientId').value;
+      confige.ru = document.getElementById('ru').value;
+      confige.showSuccessScreen = document.getElementById('showSuccessScreen').value === 'true';
+      confige.GISPlusFedcmEnabled = document.getElementById('GISPlusFedcmEnabled').value === 'true';
+      confige.signInCallback = document.getElementById('signInCallback').value;
+      showPage('home');
+    };
+
+    function loadScript(src, callback) {
+      const script = document.createElement('script');
+      script.src = src;
+      script.defer = true;
+      script.crossOrigin = 'anonymous';
+      script.onload = callback;
+      document.head.appendChild(script);
+    }
+
+    function waitForWidget(name, callback) {
+      let attempts = 0;
+      const interval = setInterval(() => {
+        attempts++;
+        if (window[name]) {
+          clearInterval(interval);
+          callback();
+        } else if (attempts > 50) {
+          clearInterval(interval);
+          alert(`${name} failed to load`);
+        }
+      }, 100);
+    }
+
+    function handleLoginClick() {
+      showPage('login');
+      loadScript('https://jssocdnstg.indiatimes.com/crosswalk_sdk/sdk/jsso_crosswalk_legacy_0.8.1.min.js', () => {
+        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/217/widget/index.main.umd.js', () => {
+          waitForWidget('ssoWidget', () => {
+            try {
+              const widgetconfige = {
+                channelName: confige.channelName,
+                element: 'ssoLogin',
+                ru: confige.ru,
+                showSuccessScreen: confige.showSuccessScreen,
+                GISPlusFedcmEnabled: confige.GISPlusFedcmEnabled
+              };
+              if (confige.signInCallback.trim()) {
+                widgetconfige.signInCallback = () => alert(confige.signInCallback);
+              }
+              window.ssoWidget('init', widgetconfige);
+            } catch (err) {
+              alert('Error initializing login widget');
+            }
+          });
+        });
+      });
+    }
+
+    function handleProfileClick() {
+      showPage('profile');
+      loadScript('https://jssocdnstg.indiatimes.com/crosswalk_sdk/sdk/jsso_crosswalk_legacy_0.8.1.min.js', () => {
+        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/217/widget/index.main.umd.js', () => {
+          waitForWidget('ssoProfileWidget', () => {
+            try {
+              const profileconfige = {
+                channel: 'toi',
+                staticUrl: 'https://jssocdnstg.indiatimes.com/crosswalk/217/widget',
+                nonLoggedInRu: 'https://jssodev.indiatimes.com/sso/identity/login?channel=toi',
+                CloseButtonRequired: true,
+                shouldAutoOpenProfile: true,
+                element: 'ssoprofileWidgetMain'
+              };
+              setTimeout(() => {
+                window.ssoProfileWidget.init(profileconfige);
+                window.ssoProfileWidget.open();
+              }, 1000);
+            } catch (err) {
+              alert('Error initializing profile widget');
+            }
+          });
+        });
+      });
+    }
+  </script>
+</body>
+</html>

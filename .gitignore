@@ -16,6 +16,5 @@ data/*
 */target/*
 */*/mvnw*
 node_modules/
-package-lock.json
 .vscode
 build

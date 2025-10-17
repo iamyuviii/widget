@@ -19,19 +19,18 @@ export default function LoginWidget() {
     signInCallback: ''
   });
 
-  const loadScript = (src, callback) => {
+ const loadScript = (src, callback) => {
     const script = document.createElement('script');
-    script.crossOrigin = 'anonymous';
-    script.type = 'text/javascript';
-    script.src = src;
-    script.defer = true;
-    script.onload = callback;
-    script.onerror = () => {
-      setError(`Failed to load script: ${src}`);
-      setIsLoading(false);
-    };
-    document.head.appendChild(script);
+  script.type = 'text/javascript';
+  script.src = src;
+  script.defer = true;
+  script.onload = callback;
+  script.onerror = () => {
+    setError(`Failed to load script: ${src}`);
+    setIsLoading(false);
   };
+  document.head.appendChild(script);
+};
 
   const waitForWidget = (name, callback) => {
     let attempts = 0;
@@ -164,7 +163,7 @@ export default function LoginWidget() {
         document.body.appendChild(loginElement);
       }
 
-      loadScript('https://jssocdnstg.indiatimes.com/crosswalk_sdk/sdk/jsso_crosswalk_legacy_0.8.1.min.js', () => {
+      loadScript('/Crosswalk.js', () => {
         loadScript('https://jssocdnstg.indiatimes.com/crosswalk/217/widget/index.main.umd.js', () => {
           waitForWidget('ssoWidget', initLogin);
         });
@@ -185,7 +184,7 @@ export default function LoginWidget() {
         document.body.appendChild(profileElement);
       }
 
-      loadScript('https://jssocdnstg.indiatimes.com/crosswalk_sdk/sdk/jsso_crosswalk_legacy_0.8.1.min.js', () => {
+      loadScript('/Crosswalk.js', () => {
         loadScript('https://jssocdnstg.indiatimes.com/crosswalk/217/widget/index.main.umd.js', () => {
           waitForWidget('ssoProfileWidget', initProfile);
         });

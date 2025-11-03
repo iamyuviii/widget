@@ -164,7 +164,7 @@ export default function LoginWidget() {
       }
 
       loadScript('/Crosswalk.js', () => {
-        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/217/widget/index.main.umd.js', () => {
+        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/219/widget/index.main.umd.js', () => {
           waitForWidget('ssoWidget', initLogin);
         });
       });
@@ -185,7 +185,7 @@ export default function LoginWidget() {
       }
 
       loadScript('/Crosswalk.js', () => {
-        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/217/widget/index.main.umd.js', () => {
+        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/219/widget/index.main.umd.js', () => {
           waitForWidget('ssoProfileWidget', initProfile);
         });
       });

@@ -984,6 +984,28 @@ class JssoCrosswalk {
         );
     }
 
+
+    GoogleOAuthLogin(clientId, accessToken, ru, callback) {
+        this.asyncJssoCall(
+            "v1/GISverify",
+            {
+                clientId: clientId,
+                accessToken: accessToken,
+                ru: ru,
+            },
+            function (response) {
+                if (response.code == 200) {
+                    this.createChannelCookies();
+                    this.fedcmInIfram(response);
+                }
+
+                if (callback) return callback(response);
+            }.bind(this)
+        );
+    }
+
+  
+    
     googleplusLogin(code, googleplusRedirectUri, callback) {
         this.asyncSocialappCall(
             "googleplusLogin",
@@ -2111,7 +2133,7 @@ class JssoCrosswalk {
 
                 setTimeout(() => {
                     if (document.hasFocus()) {
-                        // Do NOT fail yet — just notify the UI to prompt user if needed
+                        // Do NOT fail yet â€” just notify the UI to prompt user if needed
                         popUpCallback && popUpCallback({ type: 'SHOW_CONTINUE_HINT' });
                     }
                 }, 800);
@@ -2182,12 +2204,20 @@ class JssoCrosswalk {
         if (loginType == "APPLE") {
             var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
             if(this.isIOS() && isSafari){
-                ru = ru+"?clientId="+clientId+'&clientRu='+clientRu+'&channel='+this.channel;
-                var win = window.open(
-                            ru,
-                            "ssoLoginWindow",
-                            "height=600,width=600,toolbar=no,titlebar=no,status=no,resizable=no,menubar=no,location=no,top=100,left=300,screenX=300,screenY=100"
-                        );
+                this.openSocialLoginPage(
+                    "https://appleid.apple.com/auth/authorize",
+                    clientId,
+                    loginType,
+                    ru,
+                    clientRu,
+                    true
+                );
+                // ru = ru+"?clientId="+clientId+'&clientRu='+clientRu+'&channel='+this.channel;
+                // var win = window.open(
+                //             ru,
+                //             "ssoLoginWindow",
+                //             "height=600,width=600,toolbar=no,titlebar=no,status=no,resizable=no,menubar=no,location=no,top=100,left=300,screenX=300,screenY=100"
+                //         );
             }
             else{
                 this.openSocialLoginPage(
@@ -2256,6 +2286,7 @@ class JssoCrosswalk {
         }
         if(applePage){
             window.location.href = url;
+            
         }else{
             var win = window.open(
                 url,
@@ -2627,7 +2658,4 @@ function getParameterByName(name, url) {
 }
 function isSafari() {
     return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-}
-if (typeof window !== "undefined" && typeof JssoCrosswalk === "function" && typeof window.JssoCrosswalk !== "function") {
-    window.JssoCrosswalk = JssoCrosswalk;
 }

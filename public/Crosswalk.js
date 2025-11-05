@@ -2659,3 +2659,6 @@ function getParameterByName(name, url) {
 function isSafari() {
     return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
 }
+if (typeof window !== "undefined" && typeof JssoCrosswalk === "function" && typeof window.JssoCrosswalk !== "function") {
+    window.JssoCrosswalk = JssoCrosswalk;
+}

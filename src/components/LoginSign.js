@@ -68,9 +68,25 @@ export default function LoginWidget() {
         loginWith: ['otp', 'Password']
       },
       socialLogin: [
-        { type: 'Facebook', clientId: '898459706886386' },
-        { type: 'Google', clientId: config.googleClientId }
-      ],
+            {
+                type: "apple",
+                clientId: "com.economictimes.login",
+                logoUrl: "https://jsso.indiatimes.com/staticsso/images/appleLogo.png",
+                label: "Sign in with Apple"
+            },
+            {
+                type: "google",
+                clientId: "891351984915-kodsh6b9vik3h6ue008fh8jgfstageh6.apps.googleusercontent.com",
+                logoUrl: "https://jsso.indiatimes.com/staticsso/images/google.png",
+                label: "Google"
+            },
+            {
+                type: "facebook",
+                clientId: "424450167700259",
+                logoUrl: "https://jsso.indiatimes.com/staticsso/images/fb.png",
+                label: "Sign in with Facebook"
+            }
+        ],
       signupForm: {
         defaultFirstName: 'Guest',
         signUpFields: {

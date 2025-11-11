@@ -173,7 +173,7 @@ class JssoCrosswalk {
                 );
             }
 
-            truecallerVerifyV1(requestId, callback);
+            //truecallerVerifyV1(requestId, callback);
 
         }
     }
@@ -296,10 +296,16 @@ class JssoCrosswalk {
                 this.createCookie("csrfToken", x.getResponseHeader("csrfToken"), 30 * 24 * 60 * 60 * 1000);
             }
 
-            if (x.getResponseHeader("captchaToken")){
-                this.captchaToken = x.getResponseHeader("captchaToken");
-                this.createCookie("captchaToken", x.getResponseHeader("captchaToken"), 30 * 24 * 60 * 60 * 1000);
+            try {
+                const captchaHeader = x.getResponseHeader("captchaToken");
+                if (captchaHeader && captchaHeader !== "null" && captchaHeader !== "undefined") {
+                    this.captchaToken = captchaHeader;
+                    this.createCookie("captchaToken", captchaHeader, 30 * 24 * 60 * 60 * 1000);
+                }
+            } catch (e) {
+                console.log("Cannot access captchaToken header:", e);
             }
+
 
 
             if (method === "getUserDetails") {
@@ -392,9 +398,14 @@ class JssoCrosswalk {
 
             }
 
-            if (x.getResponseHeader("captchaToken")){
-                this.captchaToken = x.getResponseHeader("captchaToken");
-                this.createCookie( "captchaToken",x.getResponseHeader("captchaToken"),30 * 24 * 60 * 60 * 1000);
+            try {
+                const captchaHeader = x.getResponseHeader("captchaToken");
+                if (captchaHeader && captchaHeader !== "null" && captchaHeader !== "undefined") {
+                    this.captchaToken = captchaHeader;
+                    this.createCookie("captchaToken", captchaHeader, 30 * 24 * 60 * 60 * 1000);
+                }
+            } catch (e) {
+                console.log("Cannot access captchaToken header:", e);
             }
 
 

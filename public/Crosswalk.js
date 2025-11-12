@@ -2215,20 +2215,12 @@ class JssoCrosswalk {
         if (loginType == "APPLE") {
             var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
             if(this.isIOS() && isSafari){
-                this.openSocialLoginPage(
-                    "https://appleid.apple.com/auth/authorize",
-                    clientId,
-                    loginType,
-                    ru,
-                    clientRu,
-                    true
-                );
-                // ru = ru+"?clientId="+clientId+'&clientRu='+clientRu+'&channel='+this.channel;
-                // var win = window.open(
-                //             ru,
-                //             "ssoLoginWindow",
-                //             "height=600,width=600,toolbar=no,titlebar=no,status=no,resizable=no,menubar=no,location=no,top=100,left=300,screenX=300,screenY=100"
-                //         );
+                ru = ru+"?clientId="+clientId+'&clientRu='+clientRu+'&channel='+this.channel;
+                var win = window.open(
+                            ru,
+                            "ssoLoginWindow",
+                            "height=600,width=600,toolbar=no,titlebar=no,status=no,resizable=no,menubar=no,location=no,top=100,left=300,screenX=300,screenY=100"
+                        );
             }
             else{
                 this.openSocialLoginPage(

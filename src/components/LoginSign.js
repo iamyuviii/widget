@@ -173,8 +173,8 @@ export default function LoginWidget() {
         document.body.appendChild(loginElement);
       }
 
-      loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/crosswalk.min.js', () => {
-        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/index.main.umd.js', () => {
+      loadScript('https://jssocdnstg.indiatimes.com/crosswalk/225/widget/crosswalk.min.js', () => {
+        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/225/widget/index.main.umd.js', () => {
           waitForWidget('ssoWidget', initLogin);
         });
       });
@@ -194,8 +194,8 @@ export default function LoginWidget() {
         document.body.appendChild(profileElement);
       }
 
-      loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/crosswalk.min.js', () => {
-        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/index.main.umd.js', () => {
+      loadScript('https://jssocdnstg.indiatimes.com/crosswalk/225/widget/crosswalk.min.js', () => {
+        loadScript('https://jssocdnstg.indiatimes.com/crosswalk/225/widget/index.main.umd.js', () => {
           waitForWidget('ssoProfileWidget', initProfile);
         });
       });

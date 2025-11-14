@@ -178,7 +178,6 @@ class JssoCrosswalk {
         }
     }
     SocialloginSucces(response){
-        this.fedcmInIfram(response);
         if(typeof BroadcastChannel != 'undefined'){
         const ssobroadCast = new BroadcastChannel(this.channel);
         ssobroadCast.postMessage({
@@ -199,35 +198,7 @@ class JssoCrosswalk {
         }
         window.close();
     }
-    fedcmInIfram(response){
-            if(window.showSsoFedCmIframe){
-                var url =  this.ssoBaseUrl.split("/sso")[0] + '/sso/identity/login/setLoginStatus';
-                if(response){
-                this.getValidLoggedInUser(function(res){
-                        url = url +"?ticketId="+res.data.encTicket+'&openforfedcm='+true;
-
-                        var newWinFedcm = window.open(
-                                    url,
-                                    "ssoLoginWindownew",
-                                    "menubar=no,locationbar=n0,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10000,top=10000,width=10,height=10,visible=none"
-                                    );
-                })
-                }
-                else{
-                    var newWinFedcm = window.open(
-                        url,
-                        "ssoLoginWindownew",
-                        "menubar=no,locationbar=n0,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10000,top=10000,width=10,height=10,visible=none"
-                        );
-                    setTimeout(function(){
-                        newWinFedcm.close()
-                    },0)
-
-                    //document.body.appendChild(fedIframe);
-                }
-            }
-
-    }
+   
     asyncJssoCall(api, data, callback) {
         this.asyncCall(this.ssoBaseUrl + api, data, callback, api);
     }
@@ -296,16 +267,10 @@ class JssoCrosswalk {
                 this.createCookie("csrfToken", x.getResponseHeader("csrfToken"), 30 * 24 * 60 * 60 * 1000);
             }
 
-            try {
-                const captchaHeader = x.getResponseHeader("captchaToken");
-                if (captchaHeader && captchaHeader !== "null" && captchaHeader !== "undefined") {
-                    this.captchaToken = captchaHeader;
-                    this.createCookie("captchaToken", captchaHeader, 30 * 24 * 60 * 60 * 1000);
-                }
-            } catch (e) {
-                console.log("Cannot access captchaToken header:", e);
+            if (x.getResponseHeader("captchaToken")){
+                this.captchaToken = x.getResponseHeader("captchaToken");
+                this.createCookie("captchaToken", x.getResponseHeader("captchaToken"), 30 * 24 * 60 * 60 * 1000);
             }
-
 
 
             if (method === "getUserDetails") {
@@ -398,14 +363,9 @@ class JssoCrosswalk {
 
             }
 
-            try {
-                const captchaHeader = x.getResponseHeader("captchaToken");
-                if (captchaHeader && captchaHeader !== "null" && captchaHeader !== "undefined") {
-                    this.captchaToken = captchaHeader;
-                    this.createCookie("captchaToken", captchaHeader, 30 * 24 * 60 * 60 * 1000);
-                }
-            } catch (e) {
-                console.log("Cannot access captchaToken header:", e);
+            if (x.getResponseHeader("captchaToken")){
+                this.captchaToken = x.getResponseHeader("captchaToken");
+                this.createCookie( "captchaToken",x.getResponseHeader("captchaToken"),30 * 24 * 60 * 60 * 1000);
             }
 
 

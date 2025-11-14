@@ -80,17 +80,11 @@ export default function LoginWidget() {
                 logoUrl: "https://jsso.indiatimes.com/staticsso/images/google.png",
                 label: "Google"
             },
-            {
-                type: "facebook",
-                clientId: "424450167700259",
-                logoUrl: "https://jsso.indiatimes.com/staticsso/images/fb.png",
-                label: "Sign in with Facebook"
-            }
         ],
       signupForm: {
         defaultFirstName: 'Guest',
         signUpFields: {
-          Email: { placeholder: 'enter email', required: true },
+          Email: { placeholder: 'Enter email', required: true },
           MobileNumber: { placeholder: 'enter mobile number', required: true },
           firstName: { placeholder: 'enter first name', required: true }
         },

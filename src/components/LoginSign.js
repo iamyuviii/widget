@@ -61,7 +61,7 @@ export default function LoginWidget() {
       element: 'ssoLogin',
       resendOtpTimer: 30,
       ru: config.ru,
-      channelLogo: '',
+      channelLogo: 'https://img.lovepik.com/bg/20240124/Download-HD-Wallpaper-The-Best-Modern-Wallpapers-with-Colorful-Light_3022379_wh1200.jpg',
       showSuccessScreen: config.showSuccessScreen,
       nonSocialLogin: {
         loginVia: ['email', 'mobile'],
@@ -173,7 +173,7 @@ export default function LoginWidget() {
         document.body.appendChild(loginElement);
       }
 
-      loadScript('/Crosswalk.js', () => {
+      loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/crosswalk.min.js', () => {
         loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/index.main.umd.js', () => {
           waitForWidget('ssoWidget', initLogin);
         });
@@ -194,7 +194,7 @@ export default function LoginWidget() {
         document.body.appendChild(profileElement);
       }
 
-      loadScript('/Crosswalk.js', () => {
+      loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/crosswalk.min.js', () => {
         loadScript('https://jssocdnstg.indiatimes.com/crosswalk/224/widget/index.main.umd.js', () => {
           waitForWidget('ssoProfileWidget', initProfile);
         });
